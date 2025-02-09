@@ -1,0 +1,22 @@
+// Define the database connection
+datasource db {
+  provider = "sqlite"  // Change to "postgresql" or "mysql" if using those
+  url      = env("DATABASE_URL")
+}
+
+// Prisma client generator
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Define the Contact table
+model Contact {
+  id             Int      @id @default(autoincrement())
+  phoneNumber    String?  @unique
+  email          String?  @unique
+  linkedId       Int?     // The ID of another Contact linked to this one
+  linkPrecedence String   // "primary" or "secondary"
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+}
